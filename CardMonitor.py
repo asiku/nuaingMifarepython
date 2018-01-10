@@ -6,7 +6,7 @@ from smartcard.CardMonitoring import CardMonitor, CardObserver
 from smartcard.util import toHexString
 from Mifare1kMap import Mifare1k
 from smartcard.util import toASCIIString
-from TestDunder import InsertPresensi,InsertTap
+from TestDunder import InsertPresensi,InsertTap,UpdateTap
 
 # a simple card observer that prints inserted/removed cards
 class PrintObserver(CardObserver):
@@ -38,9 +38,11 @@ class PrintObserver(CardObserver):
                 if hex(sw1) == hex(144):
                     InsertPresensi(toASCIIString(data))
                     InsertTap(toASCIIString(data))
+                    UpdateTap("tap")
                     print (toASCIIString(data))
 
         for card in removedcards:
+            UpdateTap("remove")
             print("-Removed: ", toHexString(card.atr))
 
 if __name__ == '__main__':

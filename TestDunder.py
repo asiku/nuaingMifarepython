@@ -7,6 +7,8 @@ dbconfig = {'host': '127.0.0.1',
 'passwd': '',
 'db': 'db_sms_broadcast_sekolah', }
 
+tgl=datetime.today()
+
 def InsertPresensi(nis):
     with UseDatabase(dbconfig) as cursor:
         tgl = date.today()
@@ -47,6 +49,17 @@ def InsertTap(nis):
             cursor.execute(_SQL)
             _SQL = """INSERT INTO tb_cknf(nis) VALUES (%s)"""
             cursor.execute(_SQL, (nis,))
+
+def UpdateTap(status):
+    with UseDatabase(dbconfig) as cursor:
+        _SQL = """SELECT COUNT(*) AS tot FRom tb_cknf"""
+        cursor.execute(_SQL)
+        contents = cursor.fetchone()
+
+        if contents[0] == 1:
+            _SQL = """UPDATE tb_cknf SET status=%s"""
+            cursor.execute(_SQL, (status,))
+
 
 def jamtelat():
     with UseDatabase(dbconfig) as cursor:
