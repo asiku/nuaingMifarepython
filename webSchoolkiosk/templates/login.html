@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div id="c-login" >
+
+  <!-- <img id="imglogin" src="static/loginuser.png" alt=""> -->
+  <div class="c-inner" >
+    <form class="" action="/loginusr" method="post">
+      <input type="text" name="user_n"  placeholder="Username">
+      <input type="password" name="lgn"  placeholder="password">
+<input type="submit" value="Login">
+    </form>
+  </div>
+
+</div>
+
+{% endblock %}
+<!-- "{{ url_for('static', filename='img/favicon.ico') }}" -->

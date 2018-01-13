@@ -1,0 +1,49 @@
+*,*:before,*:after{
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;}
+
+body{
+  background-image: url("/static/texture.jpg");
+  height: 100%;
+
+/*background-position: center;*/
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#c-login{margin: auto;max-width: 100%;width: 416px;height: 387px;margin-top: 4em;
+background-image: url("/static/loginuser2.png");background-repeat: no-repeat;
+ }
+.c-inner{padding-top: 10em;padding-left: 2em;}
+input[type=text],input[type=password] {
+    width: 93%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 2px solid #4C98BC;
+    border-radius: 4px;
+    font-size: 1em;
+    box-sizing: border-box;
+    opacity: 0.5;
+}
+
+input[type=submit] {
+    width: 93%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 2px solid #FFF;
+    background-color: Transparent;
+    color: #FFF;
+    /*border-radius: 4px;*/
+    font-size: 1em;
+    box-sizing: border-box;
+}
+input[type=submit]:focus {
+  background-color: #0095FF;
+}
+input[type=submit]:hover {
+  cursor: pointer;
+  background-color: #0095FF;
+}
