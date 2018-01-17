@@ -12,10 +12,78 @@ body{
     background-size: cover;
 }
 
+img{vertical-align: middle;}
+ul{list-style-type: none;}
+a:link {
+    text-decoration: none;
+    color: #0B0763;
+    cursor: pointer;
+}
+a:hover {
+    /*text-decoration: underline;*/
+    color: #FFF;
+}
+
+a:active {
+    /*text-decoration: underline;*/
+    color: #FFF;
+}
+#dlist{background-image: url("/static/wcontent.png");background-repeat: no-repeat;
+width: 69%;float: right;
+height: 459px;
+}
+
+  /*#fullpage{max-width: 63em;margin: auto;}*/
+#ddashboard{max-width: 950px;margin: auto;font-size: 18px;font-family: 'Ubuntu';
+
+}
+#dlogout:after{content: ""; display: table; clear: both;}
+#dlogout{color: #FFF;padding-right: 10px;}
+#dlogout ul{float: right;cursor: pointer;}
+#dlogout li{display:inline;}
+
+.cmenu{background-image: url("/static/wmenu.png");background-repeat: no-repeat;
+width: 30%;height: 459px;float: left;}
+.cmenu ul{padding-top: 3em;}
+.cmenu li{padding-bottom: 1em;}
+
+.flex-container {
+  padding: 2em;
+  margin: 0;
+  list-style: none;
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-flex-flow: row wrap;
+  justify-content:flex-start;
+}
+
+.flex-item{cursor: pointer;}
+
+
+
 #c-login{margin: auto;max-width: 100%;width: 416px;height: 387px;margin-top: 4em;
 background-image: url("/static/loginuser2.png");background-repeat: no-repeat;
+font-family: 'Ubuntu';
  }
-.c-inner{padding-top: 10em;padding-left: 2em;}
+.c-inner{padding-top: 10em;padding-left: 2em;font-family: 'Ubuntu';}
+#d-salahpass{color: #FFF;font-weight: bold;animation-duration: 3s;
+  animation-name: slidein;}
+  @keyframes slidein {
+  from {
+    margin-left: 100%;
+    width: 300%;
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
 input[type=text],input[type=password] {
     width: 93%;
     padding: 12px 20px;
