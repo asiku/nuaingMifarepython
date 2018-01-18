@@ -1,5 +1,7 @@
-from flask import Flask,render_template,request,redirect
+from flask import Flask,render_template,request,redirect,session
 from DBCon import UseDatabase,ConError,UsernameLogErr,SQLError
+from cekcok import ceksess
+from datetime import timedelta
 
 app=Flask(__name__)
 
@@ -17,8 +19,23 @@ def home():
 def login_user():
     return render_template('login.html',the_title="login dulu!")
 
+@app.route('/logout')
+def exit():
+    session.pop('cekcok_login')
+    return redirect('/loginusr')
+
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=30)
+
+@app.route('/inputsiswa')
+@ceksess
+def inputdatasiswa():
+    return render_template('inputdatasiswa.html',the_title="Input Data Siswa!")
 
 @app.route('/dashboard_sch')
+@ceksess
 def dashboard():
     return render_template('dashboard_sch.html',the_title="Dashboard!")
 
@@ -28,20 +45,22 @@ def cek_login():
     lgn = request.form['lgn']
 
     with UseDatabase(dbconfig) as cursor:
-        _SQL = """select *, CAST(AES_DECRYPT(pass, '456') AS CHAR(255)) 
-        xcd from tb_usx_l where 
+        _SQL = """select *, CAST(AES_DECRYPT(pass, '456') AS CHAR(255))
+        xcd from tb_usx_l where
         username=%s"""
         cursor.execute(_SQL, (user_n,))
         contents = cursor.fetchone()
         print(contents)
         if contents!=None:
             if contents[3] == lgn:
+                session['cekcok_login']=True
                 return redirect('/dashboard_sch')
             else:
                 return render_template('login.html', the_title="login dulu!", salah="Password salah!")
         else:
             return render_template('login.html', the_title="login dulu!", salah="Password salah!")
 
+app.secret_key="simamaingsimamaung"
 
 if __name__=='__main__':
     app.run(debug=True)

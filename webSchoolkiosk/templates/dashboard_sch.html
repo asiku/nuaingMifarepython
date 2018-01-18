@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div id="ddashboard">
+  <div id="dlogout">
+  <ul>
+    <li><a href="{{ url_for('exit') }}">
+      <img src='{{ url_for('static', filename='wlogout.png')}}' alt="logout"></a></li>
+    <li><a href="{{ url_for('exit') }}">Logout</a></li>
+  </ul>
+
+  </div>
+
+  <nav role="navigations">
+  <div class="cmenu">
+    <ul>
+      <li> <a href="#">Data Siswa</a> </li>
+      <li><a href="#">Data Presensi</a></li>
+      <li> <a href="#">Data User</a> </li>
+      <li><a href="#">Setting Presensi</a></li>
+    </ul>
+  </div>
+
+  </nav>
+
+
+  <div id="dlist" >
+
+    <ul class="flex-container">
+      <li class="flex-item"><a href="{{ url_for('inputdatasiswa') }}"> <img src='{{ url_for('static',
+        filename='inputdata.png')}}' alt="inputdata"></a></li>
+      <li class="flex-item"><img src='{{ url_for('static', filename='caridata.png')}}' alt="caridata"></li>
+      <li class="flex-item"><img src='{{ url_for('static', filename='inputkelas.png')}}' alt="inputkelas"></li>
+      <li class="flex-item"><img src='{{ url_for('static', filename='statistiksiswa.png')}}' alt="statistiksiswa"></li>
+    </ul>
+
+
+  </div>
+
+</div>
+
+{% endblock %}
+<!-- "{{ url_for('static', filename='img/favicon.ico') }}" -->
