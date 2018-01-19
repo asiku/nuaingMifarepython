@@ -41,12 +41,13 @@ height: 459px;
 #dlogout{color: #FFF;padding-right: 10px;}
 #dlogout ul{float: right;cursor: pointer;}
 #dlogout li{display:inline;}
-
+.csubmenu{padding-top: 6px;}
+.csubmenu span{font-size: 13px;padding-left: 8px;}
 .cmenu{background-image: url("/static/wmenu.png");background-repeat: no-repeat;
 width: 30%;height: 459px;float: left;}
 .cmenu ul{padding-top: 3em;}
 .cmenu li{padding-bottom: 1em;}
-
+.csubmenu{padding-left: 4px;}
 .flex-container {
   padding: 2em;
   margin: 0;

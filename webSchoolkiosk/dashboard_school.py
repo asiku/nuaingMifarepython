@@ -24,15 +24,37 @@ def exit():
     session.pop('cekcok_login')
     return redirect('/loginusr')
 
-@app.before_request
-def make_session_permanent():
-    session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=30)
+# @app.before_request
+# def make_session_permanent():
+#     session.permanent = True
+#     app.permanent_session_lifetime = timedelta(minutes=30)
 
 @app.route('/inputsiswa')
 @ceksess
 def inputdatasiswa():
-    return render_template('inputdatasiswa.html',the_title="Input Data Siswa!")
+    with UseDatabase(dbconfig) as cursor:
+        # _SQL = """SELECT * FRom tb_biodata_siswa where nis=%s and Date(tgl_absen)=%s"""
+        _SQL = """SELECT * FRom tb_biodata_siswa"""
+        cursor.execute(_SQL)
+        contents = cursor.fetchall()
+        print("biodata",contents)
+    return render_template('inputdatasiswa.html',the_title="Input Data Siswa!",rows=contents)
+
+@app.route('/caridatasiswa')
+@ceksess
+def caridatasiswa():
+    return render_template('caridatasiswa.html',the_title="Cari Data Siswa!")
+
+@app.route('/inputkelas')
+@ceksess
+def inputkelas():
+
+    return render_template('inputkelas.html',the_title="Input Kelas")
+
+@app.route('/statistiksiswa')
+@ceksess
+def statistiksiswa():
+    return render_template('statistiksiswa.html',the_title="Statistik Siswa")
 
 @app.route('/dashboard_sch')
 @ceksess
