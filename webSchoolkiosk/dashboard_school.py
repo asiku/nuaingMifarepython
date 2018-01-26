@@ -1,15 +1,48 @@
-from flask import Flask,render_template,request,redirect,session
+from flask import Flask,render_template,request,redirect,session,flash,url_for
 from DBCon import UseDatabase,ConError,UsernameLogErr,SQLError
 from cekcok import ceksess
 from datetime import timedelta
+from helper_crud import Siswa
+import os
+from werkzeug.utils import secure_filename
 
 app=Flask(__name__)
 
+tbl=Siswa()
 
 dbconfig = {'host': '127.0.0.1',
 'user': 'root',
 'passwd': '',
 'db': 'db_sms_broadcast_sekolah', }
+
+UPLOAD_FOLDER = os.path.basename('gbrsiswa')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/gbrupload', methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect('/inputsiswa')
+
+    return redirect('/inputsiswa')
 
 @app.route('/')
 def home():
@@ -29,6 +62,16 @@ def exit():
 #     session.permanent = True
 #     app.permanent_session_lifetime = timedelta(minutes=30)
 
+@app.route('/savesiswa')
+@ceksess
+def savedatasiswa():
+    with UseDatabase(dbconfig) as cursor:
+        f=(tbl.nis,tbl.nama,tbl.ala)
+        isi=("559","adem","jl.cingux")
+        _SQL=tbl.insertsiswa(tbl.table)+str(f).replace("'","")+"VALUES"+str(isi)
+        cursor.execute(_SQL)
+    return "oke"
+
 @app.route('/inputsiswa')
 @ceksess
 def inputdatasiswa():
@@ -37,8 +80,16 @@ def inputdatasiswa():
         _SQL = """SELECT * FRom tb_biodata_siswa"""
         cursor.execute(_SQL)
         contents = cursor.fetchall()
-        print("biodata",contents)
-    return render_template('inputdatasiswa.html',the_title="Input Data Siswa!",rows=contents)
+        # print("biodata",contents)
+        _SQL = """SELECT * FRom tb_kelas"""
+        cursor.execute(_SQL)
+        contentskelas = cursor.fetchall()
+        _SQL = """SELECT * FRom tb_status"""
+        cursor.execute(_SQL)
+        contentsstatus = cursor.fetchall()
+
+    return render_template('inputdatasiswa.html',the_title="Input Data Siswa!",
+                           rows=contents,rowskelas=contentskelas,rowsstatus=contentsstatus)
 
 @app.route('/caridatasiswa')
 @ceksess
@@ -85,4 +136,4 @@ def cek_login():
 app.secret_key="simamaingsimamaung"
 
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0',debug=True)

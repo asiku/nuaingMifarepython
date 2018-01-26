@@ -28,9 +28,12 @@ a:active {
     /*text-decoration: underline;*/
     color: #FFF;
 }
-#dlist{background-image: url("/static/wcontent.png");background-repeat: no-repeat;
+#dlist{
+  /*background-image: url("/static/wcontent.png");background-repeat: no-repeat;*/
 width: 69%;float: right;
-height: 459px;
+/*height: 459px;*/
+background-color: #FFF;
+background: rgba(255, 255, 255, 0.5);
 }
 
   /*#fullpage{max-width: 63em;margin: auto;}*/
@@ -85,7 +88,39 @@ font-family: 'Ubuntu';
     width: 100%;
   }
 }
-input[type=text],input[type=password] {
+
+/*input:required:invalid, input:focus:invalid {
+    background-image: url("/static/error.png");
+    background-position: right;
+    background-repeat: no-repeat;
+  }
+  input:required:valid {
+    background-image: url("/static/checked.png");
+    background-position: right;
+    background-repeat: no-repeat;
+  }*/
+  #frminputsiswa{
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    padding: 10px;
+  }
+  label {
+    display: inline-block;
+    width: 300px;
+  }
+  input:required:invalid+span,input:focus:invalid{
+      content: '✖';
+      padding-left: 5px;
+  }
+
+  input:required:valid+span {
+      content: '✓';
+      padding-left: 5px;
+  }
+
+#c-login input[type=text],input[type=password] {
     width: 93%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -97,7 +132,7 @@ input[type=text],input[type=password] {
     opacity: 0.5;
 }
 
-input[type=submit] {
+#c-login input[type=submit] {
     width: 93%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -109,10 +144,46 @@ input[type=submit] {
     font-size: 1em;
     box-sizing: border-box;
 }
-input[type=submit]:focus {
+#c-login input[type=submit]:focus {
   background-color: #0095FF;
 }
-input[type=submit]:hover {
+#c-login input[type=submit]:hover {
   cursor: pointer;
   background-color: #0095FF;
+}
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    /*border: 1px solid #ccc;*/
+    /*background-color: #f1f1f1;*/
+
+}
+.tab button {
+    background-color: inherit;
+    float: left;
+  border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    /*transition: 0.3s;*/
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 2px;
+    /*padding: 6px 12px;*/
+    /*border: 1px solid #ccc;
+    border-top: none;*/
 }
