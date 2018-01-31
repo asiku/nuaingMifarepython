@@ -40,7 +40,7 @@
 
 <div id="frminputsiswa" class="tabcontent">
 
-  <form class="" action="index.html" method="post">
+  <form enctype="multipart/form-data" method="post" action="{{ url_for('upload_file') }}">
     <label for="nis">Nis</label>
     <input id="nis" type="text" name="user_n"  placeholder="Nis" required>
     <label for="nama">Nama</label>
@@ -92,23 +92,43 @@
   </select>
 
 
+<fieldset>
+  <legend>Rekam Kartu</legend>
+  <p>
+    <input type="radio" id="test1" name="radio-group" checked>
+    <label for="test1">Ya</label>
+  </p>
+  <p>
+    <input type="radio" id="test2" name="radio-group">
+    <label for="test2">Tidak</label>
+  </p>
+
+</fieldset>
+
+<div id="dfotosiswa">
+  <!-- <form enctype="multipart/form-data" method="post" action="{{ url_for('upload_file') }}"> -->
+    <fieldset>
+      <legend>Cari Foto</legend>
+      <div class="row">
+        <!-- <label for="fileToUpload">Select Files to Upload</label><br /> -->
+        <input type="file" name="file" id="filesToUpload" multiple="multiple" />
+        <output id="filesInfo"></output>
+      </div>
+      <!-- <div class="row">
+        <input type="submit" value="Upload" />
+      </div> -->
+    </fieldset>
+
+<!-- </form> -->
+<!-- <form  action="{{url_for('upload_file')}}" method=post enctype=multipart/form-data>
+    <p><input type=file name=file>
+       <input type=submit value=Upload>
+  </form> -->
+</div>
+
+<input type="submit" name="" value="Save"> <input type="reset" name="" value="Batal">
   </form>
-  <div id="dfotosiswa">
-    <form enctype="multipart/form-data" method="post" action="{{ url_for('upload_file') }}">
-  <div class="row">
-    <label for="fileToUpload">Select Files to Upload</label><br />
-    <input type="file" name="file" id="filesToUpload" multiple="multiple" />
-    <output id="filesInfo"></output>
-  </div>
-  <div class="row">
-    <input type="submit" value="Upload" />
-  </div>
-  </form>
-  <!-- <form  action="{{url_for('upload_file')}}" method=post enctype=multipart/form-data>
-      <p><input type=file name=file>
-         <input type=submit value=Upload>
-    </form> -->
-  </div>
+
 
 </div>
 

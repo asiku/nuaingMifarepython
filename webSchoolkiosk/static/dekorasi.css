@@ -101,24 +101,83 @@ font-family: 'Ubuntu';
   }*/
   #frminputsiswa{
     margin-bottom: 10px;
-    display: flex;
+    /*display: flex;*/
     align-items: center;
-    font-size: 16px;
-    padding: 10px;
+    font-size: 14px;
+    /*padding: 10px;*/
+    padding-left: 10px;
+    padding-right: 10px;
   }
-  label {
+  #frminputsiswa  label {
     display: inline-block;
     width: 300px;
   }
-  input:required:invalid+span,input:focus:invalid{
+  #frminputsiswa fieldset {
+  border : 1px solid #555;
+  border-radius: 5px;
+  margin : 0;
+  /*padding: 1em;*/
+}
+    #frminputsiswa input:required:invalid+span,input:focus:invalid{
       content: '✖';
       padding-left: 5px;
   }
 
-  input:required:valid+span {
+    #frminputsiswa input:required:valid+span {
       content: '✓';
       padding-left: 5px;
   }
+  [type="radio"]:checked,
+  [type="radio"]:not(:checked) {
+      position: absolute;
+      left: -9999px;
+  }
+  [type="radio"]:checked + label,
+  [type="radio"]:not(:checked) + label
+  {
+      position: relative;
+      padding-left: 28px;
+      cursor: pointer;
+      line-height: 20px;
+      display: inline-block;
+      /*color: #666;*/
+  }
+  [type="radio"]:checked + label:before,
+  [type="radio"]:not(:checked) + label:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 18px;
+      height: 18px;
+      border: 1px solid #ddd;
+      border-radius: 100%;
+      background: #fff;
+  }
+  [type="radio"]:checked + label:after,
+  [type="radio"]:not(:checked) + label:after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background: #F87DA9;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      border-radius: 100%;
+      -webkit-transition: all 0.2s ease;
+      transition: all 0.2s ease;
+  }
+  [type="radio"]:not(:checked) + label:after {
+      opacity: 0;
+      -webkit-transform: scale(0);
+      transform: scale(0);
+  }
+  [type="radio"]:checked + label:after {
+      opacity: 1;
+      -webkit-transform: scale(1);
+      transform: scale(1);
+  }
+
 
 #c-login input[type=text],input[type=password] {
     width: 93%;
@@ -130,6 +189,19 @@ font-family: 'Ubuntu';
     font-size: 1em;
     box-sizing: border-box;
     opacity: 0.5;
+}
+
+#frminputsiswa input[type=submit],input[type=reset] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 2px solid #FFF;
+    background-color: Transparent;
+    color: #FFF;
+    /*border-radius: 4px;*/
+    font-size: 16px;
+    box-sizing: border-box;
 }
 
 #c-login input[type=submit] {
@@ -144,10 +216,17 @@ font-family: 'Ubuntu';
     font-size: 1em;
     box-sizing: border-box;
 }
-#c-login input[type=submit]:focus {
+#c-login,#frminputsiswa input[type=submit]:focus{
   background-color: #0095FF;
 }
-#c-login input[type=submit]:hover {
+#frminputsiswa input[type=reset]:focus{
+  background-color: #0095FF;
+}
+#frminputsiswa input[type=reset]:hover {
+  cursor: pointer;
+  background-color: #0095FF;
+}
+#c-login,#frminputsiswa input[type=submit]:hover {
   cursor: pointer;
   background-color: #0095FF;
 }
