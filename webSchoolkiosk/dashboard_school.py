@@ -24,23 +24,28 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route('/gbrupload', methods=['POST'])
+@app.route('/upload_file', methods=['GET','POST'])
 def upload_file():
+
     if request.method == 'POST':
         # check if the post request has the file part
+
         if 'file' not in request.files:
-            flash('No file part')
+            flash('No file part','foto')
             return redirect(request.url)
         file = request.files['file']
+        if request.form['nis'] != None:
+           savedatasiswa(os.path.join(app.config['UPLOAD_FOLDER']) + file.filename)
         # if user does not select file, browser also
         # submit a empty part without filename
         if file.filename == '':
-            flash('No selected file')
+            flash('No selected file','foto')
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect('/inputsiswa')
+
 
     return redirect('/inputsiswa')
 
@@ -62,15 +67,36 @@ def exit():
 #     session.permanent = True
 #     app.permanent_session_lifetime = timedelta(minutes=30)
 
-@app.route('/savesiswa')
-@ceksess
-def savedatasiswa():
+# @app.route('/savesiswa')
+# @ceksess
+def savedatasiswa(fname):
     with UseDatabase(dbconfig) as cursor:
-        f=(tbl.nis,tbl.nama,tbl.ala)
-        isi=("559","adem","jl.cingux")
+        f=(tbl.nis,tbl.nama,tbl.jk
+           ,tbl.tempat,
+           tbl.ala,tbl.nohpsiswa,tbl.nohportu
+           ,tbl.idkelas,tbl.thnmasuk,tbl.tgllahir,tbl.nisn,tbl.stat
+           # ,tbl.gbr
+           )
+        # isi=("909","adem","L")
+        isi = (
+            str(request.form['nis']),
+            str(request.form['nama']),
+             str(request.form['jenis_kelamin']),
+            str(request.form['tempat']),
+            str(request.form['alamat']),
+            str(request.form['nohpsiswa']),
+            str(request.form['nohportu']),
+            str(request.form['kelas']),
+            str(request.form['tahun_masuk'])
+             ,
+            str(request.form['tgl_lahir']),
+            str(request.form['nisn']),
+            str(request.form['status'])
+            # , request.form['file']
+        )
         _SQL=tbl.insertsiswa(tbl.table)+str(f).replace("'","")+"VALUES"+str(isi)
         cursor.execute(_SQL)
-    return "oke"
+    # return "oke"
 
 @app.route('/inputsiswa')
 @ceksess
