@@ -121,8 +121,9 @@
       <legend>Cari Foto</legend>
       <div class="row">
         <!-- <label for="fileToUpload">Select Files to Upload</label><br /> -->
-        <input type="file" name="file" id="filesToUpload" multiple="multiple" />
+        <input type="file" name="file" id="filesToUpload" multiple="multiple" onchange="cvt(this)" />
         <output id="filesInfo"></output>
+        <input type="hidden" id="imgpth" name="imgpth" value="">
       </div>
       <!-- <div class="row">
         <input type="submit" value="Upload" />
@@ -196,7 +197,21 @@ function fileSelect(evt) {
 }
 
 
+function cvt(element) {
 
+ var file = element.files[0];
+
+ var reader = new FileReader();
+
+ reader.onloadend = function() {
+
+   $("#imgpth").val(reader.result);
+
+ }
+
+ reader.readAsDataURL(file);
+
+}
 
   function tabsiswa(evt,id){
 

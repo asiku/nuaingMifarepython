@@ -1,9 +1,12 @@
 from flask import Flask,render_template,request,redirect,session,flash,url_for
 from DBCon import UseDatabase,ConError,UsernameLogErr,SQLError
 from cekcok import ceksess
-from datetime import timedelta
+# from datetime import timedelta
 from helper_crud import Siswa
 import os
+
+# import base64
+
 from werkzeug.utils import secure_filename
 
 app=Flask(__name__)
@@ -35,7 +38,14 @@ def upload_file():
             return redirect(request.url)
         file = request.files['file']
         if request.form['nis'] != None:
-           savedatasiswa(os.path.join(app.config['UPLOAD_FOLDER']) + file.filename)
+
+            # if file.filename == '':
+            #    img=base64.b64encode(file.read())
+
+            # pth=os.path.dirname(os.path.realpath(__file__))
+            # savedatasiswa(pth+'/'+os.path.join(app.config['UPLOAD_FOLDER']) + '/' + file.filename)
+            bs64=request.form['imgpth']
+            savedatasiswa(bs64)
         # if user does not select file, browser also
         # submit a empty part without filename
         if file.filename == '':
@@ -75,7 +85,7 @@ def savedatasiswa(fname):
            ,tbl.tempat,
            tbl.ala,tbl.nohpsiswa,tbl.nohportu
            ,tbl.idkelas,tbl.thnmasuk,tbl.tgllahir,tbl.nisn,tbl.stat
-           # ,tbl.gbr
+           ,tbl.gbr
            )
         # isi=("909","adem","L")
         isi = (
@@ -87,12 +97,11 @@ def savedatasiswa(fname):
             str(request.form['nohpsiswa']),
             str(request.form['nohportu']),
             str(request.form['kelas']),
-            str(request.form['tahun_masuk'])
-             ,
+            str(request.form['tahun_masuk']),
             str(request.form['tgl_lahir']),
             str(request.form['nisn']),
             str(request.form['status'])
-            # , request.form['file']
+            , str(fname)
         )
         _SQL=tbl.insertsiswa(tbl.table)+str(f).replace("'","")+"VALUES"+str(isi)
         cursor.execute(_SQL)
