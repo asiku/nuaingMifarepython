@@ -28,7 +28,6 @@
       <li><a href="#">Setting Presensi</a></li>
     </ul>
   </div>
-
   </nav>
 
 
@@ -40,15 +39,26 @@
 </div>
 
 <div id="frminputsiswa" class="tabcontent">
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul class=flashes>
-      {% for message in messages %}
-        <li>{{ message }}</li>
-      {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
+  <div class="msgerror">
+  <ul>
+
+      {% with messages = get_flashed_messages(category_filter=["foto"]) %}
+        {% if messages %}
+
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+
+        {% endif %}
+      {% endwith %}
+
+    <li>
+      <img class="imgerror" src='{{ url_for('static', filename='error.png')}}' alt="error">
+    </li>
+  </ul>
+
+</div>
+
   <form enctype="multipart/form-data" method="post" action="{{ url_for('upload_file') }}">
     <label for="nis">Nis</label>
     <input id="nis" type="text" name="nis"  placeholder="Nis" required>
@@ -105,11 +115,11 @@
 <fieldset>
   <legend>Rekam Kartu</legend>
   <p>
-    <input type="radio" id="test1" name="radio-group" checked>
+    <input type="radio" id="test1" name="radio-group1" value="ya" checked>
     <label for="test1">Ya</label>
   </p>
   <p>
-    <input type="radio" id="test2" name="radio-group">
+    <input type="radio" id="test2" name="radio-group1" value="no">
     <label for="test2">Tidak</label>
   </p>
 

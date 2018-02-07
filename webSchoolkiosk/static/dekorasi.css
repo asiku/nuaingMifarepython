@@ -216,9 +216,19 @@ font-family: 'Ubuntu';
     font-size: 1em;
     box-sizing: border-box;
 }
-#c-login,#frminputsiswa input[type=submit]:focus{
+
+#c-login input[type=submit]:focus{
   background-color: #0095FF;
 }
+
+.imgerror{}
+
+.msgerror{font-weight: bold;color: red;background-color: #c7cdfa;}
+
+#frminputsiswa input[type=submit]:focus{
+  background-color: #0095FF;
+}
+
 #frminputsiswa input[type=reset]:focus{
   background-color: #0095FF;
 }
@@ -226,11 +236,14 @@ font-family: 'Ubuntu';
   cursor: pointer;
   background-color: #0095FF;
 }
-#c-login,#frminputsiswa input[type=submit]:hover {
+#c-login input[type=submit]:hover {
   cursor: pointer;
   background-color: #0095FF;
 }
-
+#frminputsiswa input[type=submit]:hover {
+  cursor: pointer;
+  background-color: #0095FF;
+}
 /* Style the tab */
 .tab {
     overflow: hidden;

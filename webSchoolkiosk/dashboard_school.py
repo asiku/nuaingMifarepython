@@ -4,7 +4,8 @@ from cekcok import ceksess
 # from datetime import timedelta
 from helper_crud import Siswa
 import os
-
+from tulis_tag import tulis_kartu
+from tulisk import tuliskartu
 # import base64
 
 from werkzeug.utils import secure_filename
@@ -46,6 +47,15 @@ def upload_file():
             # savedatasiswa(pth+'/'+os.path.join(app.config['UPLOAD_FOLDER']) + '/' + file.filename)
             bs64=request.form['imgpth']
             savedatasiswa(bs64)
+            if request.form['radio-group1']=="ya":
+
+               if tulis_kartu()=="Tap":
+                  print("kartu tap")
+                  tuliskartu(request.form['nis'])
+               else:
+                  print("kartu untap")
+                  flash("Kartu Belum di Tap",'kartu')
+
         # if user does not select file, browser also
         # submit a empty part without filename
         if file.filename == '':
