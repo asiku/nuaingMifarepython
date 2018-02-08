@@ -35,7 +35,7 @@ def upload_file():
         # check if the post request has the file part
 
         if 'file' not in request.files:
-            flash('No file part','foto')
+            flash('Anda belum Mengupload Foto Jika Lupa bisa di Edit di Tab Update','foto')
             return redirect(request.url)
         file = request.files['file']
         if request.form['nis'] != None:
@@ -59,7 +59,7 @@ def upload_file():
         # if user does not select file, browser also
         # submit a empty part without filename
         if file.filename == '':
-            flash('No selected file','foto')
+            flash('Anda belum Mengupload Foto Jika Lupa bisa di Edit di Tab Update','foto')
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)

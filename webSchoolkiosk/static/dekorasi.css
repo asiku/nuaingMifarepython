@@ -221,9 +221,13 @@ font-family: 'Ubuntu';
   background-color: #0095FF;
 }
 
-.imgerror{}
+.imgerror{cursor: pointer;}
 
-.msgerror{font-weight: bold;color: red;background-color: #c7cdfa;}
+.msgerror{font-weight: bold;color: red;width: 100%;overflow: auto;
+  background: rgba(255, 255, 255, 0.5);
+/*background-color: #c7cdfa;*/
+}
+.msgerror ul{float: right;padding-right: 10px;}
 
 #frminputsiswa input[type=submit]:focus{
   background-color: #0095FF;
