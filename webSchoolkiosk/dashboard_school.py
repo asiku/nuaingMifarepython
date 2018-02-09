@@ -46,7 +46,9 @@ def upload_file():
             # pth=os.path.dirname(os.path.realpath(__file__))
             # savedatasiswa(pth+'/'+os.path.join(app.config['UPLOAD_FOLDER']) + '/' + file.filename)
             bs64=request.form['imgpth']
+
             savedatasiswa(bs64)
+
             if request.form['radio-group1']=="ya":
 
                if tulis_kartu()=="Tap":
@@ -91,30 +93,34 @@ def exit():
 # @ceksess
 def savedatasiswa(fname):
     with UseDatabase(dbconfig) as cursor:
-        f=(tbl.nis,tbl.nama,tbl.jk
-           ,tbl.tempat,
-           tbl.ala,tbl.nohpsiswa,tbl.nohportu
-           ,tbl.idkelas,tbl.thnmasuk,tbl.tgllahir,tbl.nisn,tbl.stat
-           ,tbl.gbr
-           )
-        # isi=("909","adem","L")
-        isi = (
-            str(request.form['nis']),
-            str(request.form['nama']),
-             str(request.form['jenis_kelamin']),
-            str(request.form['tempat']),
-            str(request.form['alamat']),
-            str(request.form['nohpsiswa']),
-            str(request.form['nohportu']),
-            str(request.form['kelas']),
-            str(request.form['tahun_masuk']),
-            str(request.form['tgl_lahir']),
-            str(request.form['nisn']),
-            str(request.form['status'])
-            , str(fname)
-        )
-        _SQL=tbl.insertsiswa(tbl.table)+str(f).replace("'","")+"VALUES"+str(isi)
-        cursor.execute(_SQL)
+        # try:
+            f=(tbl.nis,tbl.nama,tbl.jk
+               ,tbl.tempat,
+               tbl.ala,tbl.nohpsiswa,tbl.nohportu
+               ,tbl.idkelas,tbl.thnmasuk,tbl.tgllahir,tbl.nisn,tbl.stat
+               ,tbl.gbr
+               )
+            # isi=("909","adem","L")
+            isi = (
+                str(request.form['nis']),
+                str(request.form['nama']),
+                 str(request.form['jenis_kelamin']),
+                str(request.form['tempat']),
+                str(request.form['alamat']),
+                str(request.form['nohpsiswa']),
+                str(request.form['nohportu']),
+                str(request.form['kelas']),
+                str(request.form['tahun_masuk']),
+                str(request.form['tgl_lahir']),
+                str(request.form['nisn']),
+                str(request.form['status'])
+                , str(fname)
+            )
+            _SQL=tbl.insertsiswa(tbl.table)+str(f).replace("'","")+"VALUES"+str(isi)
+            cursor.execute(_SQL)
+        # except SQLError:
+        #     pass
+
     # return "oke"
 
 @app.route('/inputsiswa')
@@ -180,5 +186,20 @@ def cek_login():
 
 app.secret_key="simamaingsimamaung"
 
+@app.errorhandler(500)
+def handle_bad_request(e):
+    rule = request.url_rule
+    if 'upload_file' in rule.rule:
+        flash("Data Tidak Tersimpan. Untuk mencari Data Tersimpan bisa di Check di Update siswa!", 'db')
+        return redirect('/inputsiswa')
+    elif 'statistiksiswa' in rule.rule:
+        return redirect('/statistiksiswa')
+    elif 'caridatasiswa' in rule.rule:
+        return redirect('/caridatasiswa')
+    elif 'inputkelas' in rule.rule:
+        return redirect('/inputkelas')
+    else:
+        return 'Bad Request :( '
+
 if __name__=='__main__':
-    app.run(host='0.0.0.0',debug=True)
+    app.run(host='0.0.0.0',debug=False)

@@ -40,21 +40,62 @@
 
 <div id="frminputsiswa" class="tabcontent">
   <div class="msgerror">
-  <ul>
+  <ul >
 
       {% with messages = get_flashed_messages(category_filter=["foto"]) %}
         {% if messages %}
 
           {% for message in messages %}
-            <li>{{ message }}</li>
+            <li id="errorfoto" >{{ message }} <img class="imgerror" src='{{ url_for('static', filename='warning.png')}}' alt="error" onclick="tutupmsg()"></li>
           {% endfor %}
 
         {% endif %}
       {% endwith %}
 
-    <li>
-      <img class="imgerror" src='{{ url_for('static', filename='error.png')}}' alt="error">
-    </li>
+    <!-- <li>
+
+      <img class="imgerror" src='{{ url_for('static', filename='error.png')}}' alt="error" onclick="tutupmsg()">
+    </li> -->
+  </ul>
+
+</div>
+  <div class="msgerror">
+  <ul >
+
+      {% with messages = get_flashed_messages(category_filter=["db"]) %}
+        {% if messages %}
+
+          {% for message in messages %}
+            <li id="errorfoto" >{{ message }} <img class="imgerror" src='{{ url_for('static', filename='error.png')}}' alt="error" onclick="tutupmsg()"></li>
+          {% endfor %}
+
+        {% endif %}
+      {% endwith %}
+
+    <!-- <li>
+
+      <img class="imgerror" src='{{ url_for('static', filename='error.png')}}' alt="error" onclick="tutupmsg()">
+    </li> -->
+  </ul>
+
+</div>
+   <div class="msgerror">
+  <ul >
+
+      {% with messages = get_flashed_messages(category_filter=["kartu"]) %}
+        {% if messages %}
+
+          {% for message in messages %}
+            <li id="errorfoto" >{{ message }} <img class="imgerror" src='{{ url_for('static', filename='error.png')}}' alt="error" onclick="tutupmsg()"></li>
+          {% endfor %}
+
+        {% endif %}
+      {% endwith %}
+
+    <!-- <li>
+
+      <img class="imgerror" src='{{ url_for('static', filename='error.png')}}' alt="error" onclick="tutupmsg()">
+    </li> -->
   </ul>
 
 </div>
@@ -177,6 +218,18 @@
 </div>
 
 <script type="text/javascript">
+
+function vismsg(){
+
+  var li = document.getElementById("errorfoto");
+  if (li){
+    $(".msgerror").show("slow");
+  }
+else {
+  $(".msgerror").hide("slow");
+  }
+}
+
 function fileSelect(evt) {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
         var files = evt.target.files;
@@ -206,6 +259,10 @@ function fileSelect(evt) {
     }
 }
 
+function tutupmsg(){
+
+  $(".msgerror").hide("slow");
+}
 
 function cvt(element) {
 
@@ -267,6 +324,8 @@ $('#tahun_masuk').append('<option value='+ thn1 +"selected=selected>"+thn1+'</op
 }
 
   $(document).ready(function () {
+    vismsg();
+
    tabnsiswa('frminputsiswa');
    document.getElementById('filesToUpload').addEventListener('change', fileSelect, false);
    setTahunmasuk();
