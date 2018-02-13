@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,redirect,session,flash,url_for
+from flask import Flask,render_template,request,redirect,session,flash,jsonify,url_for
 from DBCon import UseDatabase,ConError,UsernameLogErr,SQLError
 from cekcok import ceksess
 # from datetime import timedelta
@@ -162,6 +162,22 @@ def statistiksiswa():
 @ceksess
 def dashboard():
     return render_template('dashboard_sch.html',the_title="Dashboard!")
+
+
+@app.route('/cari_nis/<cr>')
+def carinis(cr):
+    with UseDatabase(dbconfig) as cursor:
+        # _SQL="""select * from  tb_biodata_siswa where nis like %s"""
+        # cursor.execute(_SQL,("%" + cr + "%",))
+
+        _SQL = """select * from  tb_biodata_siswa where nis=%s"""
+        cursor.execute(_SQL, (cr,))
+        contents = cursor.fetchone()
+        print(contents)
+        if contents != None:
+           return jsonify({'result':'Mohon maaf Nis tersebut sudah Ada!'})
+        else:
+           return jsonify({'result':'ok'})
 
 @app.route('/loginusr',methods=['POST'])
 def cek_login():

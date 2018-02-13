@@ -99,7 +99,13 @@
   </ul>
 
 </div>
+<div id="nismsgerror">
+<ul >
+    <li><img class="imgerror" src='{{ url_for('static', filename='error.png')}}' alt="error" onclick="tutupmsgnis()"></li>
+    <li id="errornis" >       </li>
+</ul>
 
+</div>
   <form enctype="multipart/form-data" method="post" action="{{ url_for('upload_file') }}">
     <label for="nis">Nis</label>
     <input id="nis" type="text" name="nis"  placeholder="Nis" required>
@@ -218,6 +224,32 @@
 </div>
 
 <script type="text/javascript">
+function cari(ns){
+  $.ajax({
+
+    url: $SCRIPT_ROOT + "/cari_nis/" + ns,
+    success: function( response ) {
+
+      console.log('tes:'+response.result);
+      if (response.result!=="ok") {
+
+         console.log("kbaca");
+         $("#nismsgerror").show("slow");
+         document.getElementById("errornis").innerHTML =response.result;
+      }
+      else {
+         document.getElementById("errornis").innerHTML ="";
+         $("#nismsgerror").hide("slow");
+      }
+      // var t = JSON.parse(response);
+      // console.log('RESponse:'+t[0]['toth']);
+
+
+
+    }
+  });
+}
+
 
 function vismsg(){
 
@@ -262,6 +294,11 @@ function fileSelect(evt) {
 function tutupmsg(){
 
   $(".msgerror").hide("slow");
+}
+
+function tutupmsgnis(){
+
+  $("#nismsgerror").hide("slow");
 }
 
 function cvt(element) {
@@ -324,6 +361,20 @@ $('#tahun_masuk').append('<option value='+ thn1 +"selected=selected>"+thn1+'</op
 }
 
   $(document).ready(function () {
+$("#nismsgerror").hide("slow");
+  $('#nis').keyup(function(e) {
+
+    if (e.keyCode == 13)
+      {
+
+      }
+    else
+    {
+      cari($("#nis").val());
+    }
+
+});
+
     vismsg();
 
    tabnsiswa('frminputsiswa');

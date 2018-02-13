@@ -229,6 +229,13 @@ font-family: 'Ubuntu';
 }
 .msgerror ul{float: right;padding-right: 10px;}
 
+#nismsgerror{font-weight: bold;color: red;width: 100%;overflow: auto;
+  background: rgba(255, 255, 255, 0.5);
+/*background-color: #c7cdfa;*/
+}
+#nismsgerror ul{padding-right: 10px;}
+#nismsgerror li{float: right;padding: 2px;}
+
 #frminputsiswa input[type=submit]:focus{
   background-color: #0095FF;
 }
