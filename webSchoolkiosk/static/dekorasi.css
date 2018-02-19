@@ -255,6 +255,29 @@ font-family: 'Ubuntu';
   cursor: pointer;
   background-color: #0095FF;
 }
+
+
+/* Style the table */
+#tb_siswa{ border-collapse: collapse; width:100%;font-size: 0.8em;}
+#tb_siswa td, #tb_siswa th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#tb_siswa tr:nth-child(even){background-color: #f2f2f2;}
+#tb_siswa tr:nth-child(odd){background-color: #f2f2f2;}
+
+#tb_siswa tr:hover {background-color: #ddd;}
+
+#tb_siswa th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+
 /* Style the tab */
 .tab {
     overflow: hidden;

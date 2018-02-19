@@ -15,6 +15,10 @@
 </head>
 <body>
 <script src="{{url_for('static', filename='js/jquery-ui-1.12.1/jquery.js')}}"></script>
+<script src="{{url_for('static', filename='js/dist/jquery.inputmask.bundle.min.js')}}"></script>
+<script type="text/javascript">
+  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
 {% block body %}
 {% endblock %}
 </body>

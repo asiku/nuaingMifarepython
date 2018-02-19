@@ -122,7 +122,8 @@
     <input id="alamat" type="text" name="alamat"  placeholder="Alamat" required>
 
   <label for="tgl_lahir">Tgl Lahir</label>
-  <input id="tgl_lahir" type="date" name="tgl_lahir"  placeholder="Tgl Lahir" required>
+  <!-- <input id="tgl_lahir" type="date" name="tgl_lahir"  placeholder="Tgl Lahir" required> -->
+    <input id="tgl_lahir" type="text" data-inputmask="'alias': 'date'"  name="tgl_lahir"  placeholder="Tgl Lahir" required>
   <label for="tempat">Tempat Lahir</label>
   <input id="tempat" type="text" name="tempat"  placeholder="Tempat Lahir" required>
   <label for="nohportu">No Hp Orang Tua</label>
@@ -201,18 +202,21 @@
 </div>
 
 <div id="updatesiswa" class="tabcontent">
-  <table>
+  <table id="tb_siswa">
 
   <tr>
     <th>Nis</th>
     <th>Nama</th>
+    <th>Edit</th>
+    <th>Hapus</th>
   </tr>
       {% for row in rows %}
 
         <tr>
           <td>{{ row[0]}}</td>
           <td>{{ row[1] }}</td>
-
+          <td><img class="imgaksi" src='{{ url_for('static', filename='pencil.png')}}' alt="error" onclick="tutupmsgnis()"></td>
+          <td><img class="imgaksi" src='{{ url_for('static', filename='error.png')}}' alt="error" onclick="tutupmsgnis()"></td>
         </tr>
       {% endfor %}
   </table>
@@ -366,7 +370,7 @@ $("#nismsgerror").hide("slow");
 
     if (e.keyCode == 13)
       {
-
+        $("#nama").focus();
       }
     else
     {
@@ -375,6 +379,34 @@ $("#nismsgerror").hide("slow");
 
 });
 
+$('#nama').keyup(function(e) {
+
+  if (e.keyCode == 13)
+    {
+      $("#jenis_kelamin").focus();
+    }
+
+});
+
+$('#jenis_kelamin').keyup(function(e) {
+
+  if (e.keyCode == 13)
+    {
+      $("#alamat").focus();
+    }
+
+});
+
+$("#tgl_lahir").inputmask();
+
+$('#alamat').keyup(function(e) {
+
+  if (e.keyCode == 13)
+    {
+      $("#tgl_lahir").focus();
+    }
+
+});
     vismsg();
 
    tabnsiswa('frminputsiswa');
