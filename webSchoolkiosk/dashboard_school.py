@@ -126,6 +126,7 @@ def savedatasiswa(fname):
 @app.route('/inputsiswa')
 @ceksess
 def inputdatasiswa():
+
     with UseDatabase(dbconfig) as cursor:
         # _SQL = """SELECT * FRom tb_biodata_siswa where nis=%s and Date(tgl_absen)=%s"""
         _SQL = """SELECT * FRom tb_biodata_siswa"""
@@ -140,7 +141,7 @@ def inputdatasiswa():
         contentsstatus = cursor.fetchall()
 
     return render_template('inputdatasiswa.html',the_title="Input Data Siswa!",
-                           rows=contents,rowskelas=contentskelas,rowsstatus=contentsstatus)
+                           rows=contents,rowskelas=contentskelas,rowsstatus=contentsstatus,jalur=request.url_rule,tb=1)
 
 @app.route('/caridatasiswa')
 @ceksess
@@ -165,6 +166,7 @@ def dashboard():
 
 
 @app.route('/cari_nis/<cr>')
+@ceksess
 def carinis(cr):
     with UseDatabase(dbconfig) as cursor:
         # _SQL="""select * from  tb_biodata_siswa where nis like %s"""
@@ -178,6 +180,22 @@ def carinis(cr):
            return jsonify({'result':'Mohon maaf Nis tersebut sudah Ada!'})
         else:
            return jsonify({'result':'ok'})
+
+@app.route('/delsis/<rw>')
+@ceksess
+def delsiswa(rw):
+
+    with UseDatabase(dbconfig) as cursor:
+        _SQL = """delete from  tb_biodata_siswa where nis=%s"""
+        cursor.execute(_SQL, (rw,))
+
+    with UseDatabase(dbconfig) as cursor:
+        # _SQL = """SELECT * FRom tb_biodata_siswa where nis=%s and Date(tgl_absen)=%s"""
+        _SQL = """SELECT * FRom tb_biodata_siswa"""
+        cursor.execute(_SQL)
+        contents = cursor.fetchall()
+    return render_template('inputdatasiswa.html', the_title="Input Data Siswa!",
+                           rows=contents,tb=2)
 
 @app.route('/loginusr',methods=['POST'])
 def cek_login():

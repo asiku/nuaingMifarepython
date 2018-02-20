@@ -216,7 +216,9 @@
           <td>{{ row[0]}}</td>
           <td>{{ row[1] }}</td>
           <td><img class="imgaksi" src='{{ url_for('static', filename='pencil.png')}}' alt="error" onclick="tutupmsgnis()"></td>
-          <td><img class="imgaksi" src='{{ url_for('static', filename='error.png')}}' alt="error" onclick="tutupmsgnis()"></td>
+          <!--<td><img class="imgaksi" src='{{ url_for('static', filename='error.png')}}' alt="error" onclick=delsis({{ row[0]}})></td>-->
+          <td><a href="/delsis/{{ row[0]}}"> <img class="imgaksi" src='{{ url_for('static', filename='error.png')}}' alt="error" ></a></td>
+
         </tr>
       {% endfor %}
   </table>
@@ -245,6 +247,33 @@ function cari(ns){
          document.getElementById("errornis").innerHTML ="";
          $("#nismsgerror").hide("slow");
       }
+      // var t = JSON.parse(response);
+      // console.log('RESponse:'+t[0]['toth']);
+
+
+
+    }
+  });
+}
+
+function delsis(ns){
+
+  $.ajax({
+
+    url: $SCRIPT_ROOT + "/delsis/" + ns,
+    success: function( response ) {
+      // tabupdatesiswa('updatesiswa');
+      // console.log('tes:'+response.result);
+      // if (response.result!=="ok") {
+      //
+      //    console.log("kbaca");
+      //    $("#nismsgerror").show("slow");
+      //    document.getElementById("errornis").innerHTML =response.result;
+      // }
+      // else {
+      //    document.getElementById("errornis").innerHTML ="";
+      //    $("#nismsgerror").hide("slow");
+      // }
       // var t = JSON.parse(response);
       // console.log('RESponse:'+t[0]['toth']);
 
@@ -337,7 +366,33 @@ function cvt(element) {
     evt.currentTarget.className += " active";
   }
 
-  function tabnsiswa(id){
+  function tabnsiswa(id,tb){
+  var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+        // /alert(tablinks[i].className.replace(" active", ""));
+    }
+
+    if (tb==1) {
+    document.getElementById(id).style.display = "block";
+    tablinks[0].className += " active";
+    console.log("tb1");
+    }
+    else {
+    document.getElementById("updatesiswa").style.display = "block";
+    tablinks[1].className += " active";
+    console.log("tb2");
+    }
+
+  }
+
+  function tabupdatesiswa(id){
   var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
 
@@ -350,8 +405,9 @@ function cvt(element) {
         // /alert(tablinks[i].className.replace(" active", ""));
     }
     document.getElementById(id).style.display = "block";
-    tablinks[0].className += " active";
+    tablinks[1].className += " active";
   }
+
 
 function setTahunmasuk(){
   var thn1=(new Date()).getFullYear();
@@ -409,7 +465,8 @@ $('#alamat').keyup(function(e) {
 });
     vismsg();
 
-   tabnsiswa('frminputsiswa');
+   tabnsiswa('frminputsiswa',{{tb}});
+
    document.getElementById('filesToUpload').addEventListener('change', fileSelect, false);
    setTahunmasuk();
   //  $('#tahun_masuk')
