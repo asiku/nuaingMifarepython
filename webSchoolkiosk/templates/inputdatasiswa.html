@@ -202,6 +202,15 @@
 </div>
 
 <div id="updatesiswa" class="tabcontent">
+  <div class="dcarinis">
+      <input type="search" id="caritb" name="caritb"
+       placeholder="Cari Nis atau Nama">
+      <button>Search</button>
+    </div>
+
+<div id="dtbnis">
+
+
   <table id="tb_siswa">
 
   <tr>
@@ -210,9 +219,16 @@
     <th>Edit</th>
     <th>Hapus</th>
   </tr>
+
       {% for row in rows %}
 
+
+  <div class="dimgedit"><img class="imgaksi" src='{{ url_for('static', filename='pencil.png')}}' alt="error" onclick="tutupmsgnis()"></div>
+  <div class="dimghps"><a href="/delsis/{{ row[0]}}"> <img class="imgaksi" src='{{ url_for('static', filename='error.png')}}' alt="error" ></a></div>
+
+
         <tr>
+
           <td>{{ row[0]}}</td>
           <td>{{ row[1] }}</td>
           <td><img class="imgaksi" src='{{ url_for('static', filename='pencil.png')}}' alt="error" onclick="tutupmsgnis()"></td>
@@ -221,7 +237,11 @@
 
         </tr>
       {% endfor %}
+
+
+
   </table>
+  </div>
 </div>
 
 
@@ -230,6 +250,92 @@
 </div>
 
 <script type="text/javascript">
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
+function cariupdate(ns) {
+  $.ajax({
+
+    url: $SCRIPT_ROOT + "/caritb_nis/" + ns,
+    success: function( response ) {
+      // console.log('caritb:'+response);
+$("#tb_siswa").find("tr:gt(0)").remove();
+var table = document.getElementById("tb_siswa");
+var i=0;
+
+// if (typeof response !== 'undefined' || response != null || response.length>0) {
+
+// if (response === undefined || response.length == 0) {
+if(isEmpty(response)){
+console.log("kosong");
+}
+else {
+console.log("aya");
+}
+
+//masih error on Id
+var ed=document.getElementsByClassName("dimgedit")[0].innerHTML;
+var hp=document.getElementsByClassName("dimghps")[0].innerHTML;
+
+  $.each(response, function(index, value) {
+        i++;
+        var rec = table.insertRow(i);
+        var cell1 = rec.insertCell(0);
+        var cell2 = rec.insertCell(1);
+        var cell3 = rec.insertCell(2);
+        var cell4 = rec.insertCell(3);
+        // console.log("Nis: "+value.nis);
+        cell1.innerHTML =value.nis;
+        cell2.innerHTML = value.nama;
+        cell3.innerHTML=ed;
+        cell4.innerHTML=hp;
+
+      });
+
+
+    }
+  });
+}
+
+function cariallupdate() {
+  $.ajax({
+
+    url: $SCRIPT_ROOT + "/carialltb_nis",
+    success: function( response ) {
+      // console.log('caritb:'+response);
+$("#tb_siswa").find("tr:gt(0)").remove();
+var table = document.getElementById("tb_siswa");
+var i=0;
+
+var ed=document.getElementsByClassName("dimgedit")[0].innerHTML;
+var hp=document.getElementsByClassName("dimghps")[0].innerHTML;
+
+  $.each(response, function(index, value) {
+        i++;
+        var rec = table.insertRow(i);
+        var cell1 = rec.insertCell(0);
+        var cell2 = rec.insertCell(1);
+        var cell3 = rec.insertCell(2);
+        var cell4 = rec.insertCell(3);
+        // console.log("Nis: "+value.nis);
+        cell1.innerHTML =value.nis;
+        cell2.innerHTML = value.nama;
+        cell3.innerHTML=ed;
+        cell4.innerHTML=hp;
+
+      });
+
+    }
+  });
+}
+
+
+
 function cari(ns){
   $.ajax({
 
@@ -420,8 +526,29 @@ $('#tahun_masuk').append('<option value='+ thn1 +"selected=selected>"+thn1+'</op
 
 }
 
-  $(document).ready(function () {
+$(document).ready(function () {
+
+$(".dimgedit").hide();
+$(".dimghps").hide();
 $("#nismsgerror").hide("slow");
+
+
+$('#caritb').keyup(function(e) {
+console.log("cari");
+var chatinput = document.getElementById("caritb").value;
+console.log(chatinput);
+if (chatinput == "" || chatinput.length == 0 || chatinput == null) {
+  cariallupdate();
+console.log("text kosong");
+}
+
+else {
+  cariupdate($("#caritb").val());
+}
+
+
+
+});
   $('#nis').keyup(function(e) {
 
     if (e.keyCode == 13)
@@ -430,7 +557,8 @@ $("#nismsgerror").hide("slow");
       }
     else
     {
-      cari($("#nis").val());
+        cari($("#nis").val());
+
     }
 
 });

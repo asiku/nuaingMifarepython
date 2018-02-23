@@ -164,6 +164,35 @@ def statistiksiswa():
 def dashboard():
     return render_template('dashboard_sch.html',the_title="Dashboard!")
 
+@app.route('/caritb_nis/<cr>')
+@ceksess
+def caritbnis(cr):
+    with UseDatabase(dbconfig) as cursor:
+        _SQL="""select * from  tb_biodata_siswa where nis like %s or nama like %s"""
+        cursor.execute(_SQL,("%" + cr + "%","%" + cr + "%",))
+        contents = cursor.fetchall()
+        tb_biodict=[]
+        for c in contents:
+            bio={ 'nis':c [0],'nama':c[1] }
+            tb_biodict.append(bio)
+
+    return jsonify(tb_biodict)
+
+@app.route('/carialltb_nis')
+@ceksess
+def carialltbnis():
+    with UseDatabase(dbconfig) as cursor:
+        _SQL="""select * from  tb_biodata_siswa"""
+        cursor.execute(_SQL)
+        contents = cursor.fetchall()
+        tb_biodict=[]
+        for c in contents:
+            bio={ 'nis':c [0],'nama':c[1] }
+            tb_biodict.append(bio)
+
+    return jsonify(tb_biodict)
+
+
 
 @app.route('/cari_nis/<cr>')
 @ceksess
@@ -236,4 +265,4 @@ def handle_bad_request(e):
         return 'Bad Request :( '
 
 if __name__=='__main__':
-    app.run(host='0.0.0.0',debug=False)
+    app.run(host='0.0.0.0',debug=True)
