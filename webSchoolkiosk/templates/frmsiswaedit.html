@@ -1,0 +1,91 @@
+<form enctype="multipart/form-data" method="post" action="{{ url_for('upload_file') }}">
+  <label for="nis">Nis</label>
+  <input id="nis" type="text" name="nis"  placeholder="Nis" required>
+  <label for="nama">Nama</label>
+  <input id="nama" type="text" name="nama"  placeholder="Nama" required>
+
+  <label for="jenis_kelamin">Jenis Kelamin</label>
+  <select id="jenis_kelamin" name="jenis_kelamin" required>
+   <option value=""></option>
+  <option value="L">Laki-laki</option>
+  <option value="P">Perempuan</option>
+  </select>
+  <label for="alamat">Alamat</label>
+  <input id="alamat" type="text" name="alamat"  placeholder="Alamat" required>
+
+<label for="tgl_lahir">Tgl Lahir</label>
+<!-- <input id="tgl_lahir" type="date" name="tgl_lahir"  placeholder="Tgl Lahir" required> -->
+  <input id="tgl_lahir" type="text" data-inputmask="'alias': 'date'"  name="tgl_lahir"  placeholder="Tgl Lahir" required>
+<label for="tempat">Tempat Lahir</label>
+<input id="tempat" type="text" name="tempat"  placeholder="Tempat Lahir" required>
+<label for="nohportu">No Hp Orang Tua</label>
+<input id="nohportu" type="text" name="nohportu"  placeholder="No Hp Orang Tua" required>
+<label for="nohpsiswa">No Hp Siswa</label>
+<input id="nohpsiswa" type="text" name="nohpsiswa"  placeholder="No Hp Siswa" >
+
+  <label  for="kelas">Kelas</label>
+  <select id="kelas" name="kelas" required>
+   <option value=""></option>
+  {% for rowkelas in rowskelas %}
+
+  <option value={{ rowkelas[0]}}>{{ rowkelas[1]}}</option>
+
+ {% endfor %}
+ </select>
+
+  <label for="tahun_masuk">Tahun Masuk</label>
+
+  <select id="tahun_masuk" name="tahun_masuk">
+   <option value=""></option>
+  </select>
+
+   <label for="nisn">Nisn</label>
+  <input id="nisn" type="text" name="nisn"  placeholder="Nisn" >
+  <label for="status">Status</label>
+ <select id="status" name="status">
+  <option value=""></option>
+  {% for rowstatus in rowsstatus %}
+
+  <option value={{ rowstatus[0]}}>{{ rowstatus[1]}}</option>
+
+ {% endfor %}
+</select>
+
+
+<fieldset>
+<legend>Rekam Kartu</legend>
+<p>
+  <input type="radio" id="test1" name="radio-group1" value="ya" checked>
+  <label for="test1">Ya</label>
+</p>
+<p>
+  <input type="radio" id="test2" name="radio-group1" value="no">
+  <label for="test2">Tidak</label>
+</p>
+
+</fieldset>
+
+
+<!-- <form enctype="multipart/form-data" method="post" action="{{ url_for('upload_file') }}"> -->
+  <fieldset>
+    <legend>Cari Foto</legend>
+    
+      <!-- <label for="fileToUpload">Select Files to Upload</label><br /> -->
+      <input type="file" name="file" id="filesToUpload" multiple="multiple" onchange="cvt(this)" />
+      <output id="filesInfo"></output>
+      <input type="hidden" id="imgpth" name="imgpth" value="">
+
+    <!-- <div class="row">
+      <input type="submit" value="Upload" />
+    </div> -->
+  </fieldset>
+
+<!-- </form> -->
+<!-- <form  action="{{url_for('upload_file')}}" method=post enctype=multipart/form-data>
+  <p><input type=file name=file>
+     <input type=submit value=Upload>
+</form> -->
+
+<input type="submit" name="" value="Save">
+ <input type="reset" name="" value="Batal">
+</form>

@@ -106,97 +106,8 @@
 </ul>
 
 </div>
-  <form enctype="multipart/form-data" method="post" action="{{ url_for('upload_file') }}">
-    <label for="nis">Nis</label>
-    <input id="nis" type="text" name="nis"  placeholder="Nis" required>
-    <label for="nama">Nama</label>
-    <input id="nama" type="text" name="nama"  placeholder="Nama" required>
 
-    <label for="jenis_kelamin">Jenis Kelamin</label>
-    <select id="jenis_kelamin" name="jenis_kelamin" required>
-     <option value=""></option>
-    <option value="L">Laki-laki</option>
-    <option value="P">Perempuan</option>
-    </select>
-    <label for="alamat">Alamat</label>
-    <input id="alamat" type="text" name="alamat"  placeholder="Alamat" required>
-
-  <label for="tgl_lahir">Tgl Lahir</label>
-  <!-- <input id="tgl_lahir" type="date" name="tgl_lahir"  placeholder="Tgl Lahir" required> -->
-    <input id="tgl_lahir" type="text" data-inputmask="'alias': 'date'"  name="tgl_lahir"  placeholder="Tgl Lahir" required>
-  <label for="tempat">Tempat Lahir</label>
-  <input id="tempat" type="text" name="tempat"  placeholder="Tempat Lahir" required>
-  <label for="nohportu">No Hp Orang Tua</label>
-  <input id="nohportu" type="text" name="nohportu"  placeholder="No Hp Orang Tua" required>
-  <label for="nohpsiswa">No Hp Siswa</label>
-  <input id="nohpsiswa" type="text" name="nohpsiswa"  placeholder="No Hp Siswa" >
-
-    <label  for="kelas">Kelas</label>
-    <select id="kelas" name="kelas" required>
-     <option value=""></option>
-    {% for rowkelas in rowskelas %}
-
-    <option value={{ rowkelas[0]}}>{{ rowkelas[1]}}</option>
-
-   {% endfor %}
-   </select>
-
-    <label for="tahun_masuk">Tahun Masuk</label>
-
-    <select id="tahun_masuk" name="tahun_masuk">
-     <option value=""></option>
-    </select>
-
-     <label for="nisn">Nisn</label>
-    <input id="nisn" type="text" name="nisn"  placeholder="Nisn" >
-    <label for="status">Status</label>
-   <select id="status" name="status">
-    <option value=""></option>
-    {% for rowstatus in rowsstatus %}
-
-    <option value={{ rowstatus[0]}}>{{ rowstatus[1]}}</option>
-
-   {% endfor %}
-  </select>
-
-
-<fieldset>
-  <legend>Rekam Kartu</legend>
-  <p>
-    <input type="radio" id="test1" name="radio-group1" value="ya" checked>
-    <label for="test1">Ya</label>
-  </p>
-  <p>
-    <input type="radio" id="test2" name="radio-group1" value="no">
-    <label for="test2">Tidak</label>
-  </p>
-
-</fieldset>
-
-<div id="dfotosiswa">
-  <!-- <form enctype="multipart/form-data" method="post" action="{{ url_for('upload_file') }}"> -->
-    <fieldset>
-      <legend>Cari Foto</legend>
-      <div class="row">
-        <!-- <label for="fileToUpload">Select Files to Upload</label><br /> -->
-        <input type="file" name="file" id="filesToUpload" multiple="multiple" onchange="cvt(this)" />
-        <output id="filesInfo"></output>
-        <input type="hidden" id="imgpth" name="imgpth" value="">
-      </div>
-      <!-- <div class="row">
-        <input type="submit" value="Upload" />
-      </div> -->
-    </fieldset>
-
-<!-- </form> -->
-<!-- <form  action="{{url_for('upload_file')}}" method=post enctype=multipart/form-data>
-    <p><input type=file name=file>
-       <input type=submit value=Upload>
-  </form> -->
-</div>
-
-<input type="submit" name="" value="Save"> <input type="reset" name="" value="Batal">
-  </form>
+{% include 'frmsiswa.html' %}
 
 
 </div>
@@ -231,7 +142,7 @@
 
           <td>{{ row[0]}}</td>
           <td>{{ row[1] }}</td>
-          <td><img class="imgaksi" src='{{ url_for('static', filename='pencil.png')}}' alt="error" onclick="tutupmsgnis()"></td>
+          <td><img class="imgaksi" src='{{ url_for('static', filename='pencil.png')}}' alt="error" onclick="overlay()"></td>
           <!--<td><img class="imgaksi" src='{{ url_for('static', filename='error.png')}}' alt="error" onclick=delsis({{ row[0]}})></td>-->
           <td><a href="/delsis/{{ row[0]}}"> <img class="imgaksi" src='{{ url_for('static', filename='error.png')}}' alt="error" ></a></td>
 
@@ -249,7 +160,18 @@
 
 </div>
 
+<div id="dedit">
+     <div id="frmeditsiswa">
+        {% include 'frmsiswaedit.html' %}
+     </div>
+</div>
+
 <script type="text/javascript">
+function overlay() {
+	el = document.getElementById("dedit");
+	el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+}
+
 function isEmpty(obj) {
     for(var key in obj) {
         if(obj.hasOwnProperty(key))
@@ -279,8 +201,8 @@ console.log("aya");
 }
 
 //masih error on Id
-var ed=document.getElementsByClassName("dimgedit")[0].innerHTML;
-var hp=document.getElementsByClassName("dimghps")[0].innerHTML;
+var ed=document.getElementsByClassName("dimgedit");
+var hp=document.getElementsByClassName("dimghps");
 
   $.each(response, function(index, value) {
         i++;
@@ -292,8 +214,9 @@ var hp=document.getElementsByClassName("dimghps")[0].innerHTML;
         // console.log("Nis: "+value.nis);
         cell1.innerHTML =value.nis;
         cell2.innerHTML = value.nama;
-        cell3.innerHTML=ed;
-        cell4.innerHTML=hp;
+        $('.dimghps a').attr('href', "/delsis/" + value.nis);
+        cell3.innerHTML=ed[i].innerHTML;
+        cell4.innerHTML=hp[i].innerHTML;
 
       });
 
@@ -312,8 +235,9 @@ $("#tb_siswa").find("tr:gt(0)").remove();
 var table = document.getElementById("tb_siswa");
 var i=0;
 
-var ed=document.getElementsByClassName("dimgedit")[0].innerHTML;
-var hp=document.getElementsByClassName("dimghps")[0].innerHTML;
+//masih error on Id
+var ed=document.getElementsByClassName("dimgedit");
+var hp=document.getElementsByClassName("dimghps");
 
   $.each(response, function(index, value) {
         i++;
@@ -325,8 +249,8 @@ var hp=document.getElementsByClassName("dimghps")[0].innerHTML;
         // console.log("Nis: "+value.nis);
         cell1.innerHTML =value.nis;
         cell2.innerHTML = value.nama;
-        cell3.innerHTML=ed;
-        cell4.innerHTML=hp;
+        cell3.innerHTML=ed[i-1].innerHTML;
+        cell4.innerHTML=hp[i-1].innerHTML;
 
       });
 

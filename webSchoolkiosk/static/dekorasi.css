@@ -99,6 +99,93 @@ font-family: 'Ubuntu';
     background-position: right;
     background-repeat: no-repeat;
   }*/
+
+  /*Edit Modal*/
+  #dedit {
+       visibility: hidden;
+       position: absolute;
+       left: 0px;
+       top: 0px;
+
+       /*text-align:center;*/
+       z-index: 1000;
+  }
+
+  #dedit div {
+    width:50%;
+    height:100%;
+       margin: auto;
+       background-color: #fff;
+       /*border:1px solid #000;*/
+       padding:15px;
+       /*text-align:center;*/
+       background: rgba(255, 255, 255, 0.5);
+
+  }
+
+  #frmeditsiswa{
+    margin-bottom: 10px;
+    /*display: flex;*/
+    align-items: center;
+    font-size: 14px;
+    /*padding: 10px;*/
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+
+  #frmeditsiswa  label {
+    display: inline-block;
+    width: 300px;
+  }
+  #frmeditsiswa fieldset {
+  border : 1px solid #555;
+  border-radius: 5px;
+  margin : 0;
+  /*padding: 1em;*/
+  }
+
+  #frmeditsiswa input:required:invalid+span,input:focus:invalid{
+    content: '✖';
+    padding-left: 5px;
+}
+
+  #frmeditsiswa input:required:valid+span {
+    content: '✓';
+    padding-left: 5px;
+}
+
+#frmeditsiswa input[type=submit],input[type=reset] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 2px solid #FFF;
+    background-color: Transparent;
+    color: #FFF;
+    /*border-radius: 4px;*/
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+#frmeditsiswa input[type=submit]:focus{
+  background-color: #0095FF;
+}
+
+#frmeditsiswa input[type=reset]:focus{
+  background-color: #0095FF;
+}
+
+#frmeditsiswa input[type=submit]:hover {
+  cursor: pointer;
+  background-color: #0095FF;
+}
+#frmeditsiswa input[type=reset]:hover {
+  cursor: pointer;
+  background-color: #0095FF;
+}
+/*end edit frm siswa*/
+
   #frminputsiswa{
     margin-bottom: 10px;
     /*display: flex;*/
@@ -127,6 +214,39 @@ font-family: 'Ubuntu';
       content: '✓';
       padding-left: 5px;
   }
+
+  #frminputsiswa input[type=submit],input[type=reset] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 2px solid #FFF;
+      background-color: Transparent;
+      color: #FFF;
+      /*border-radius: 4px;*/
+      font-size: 16px;
+      box-sizing: border-box;
+  }
+
+  #frminputsiswa input[type=submit]:focus{
+    background-color: #0095FF;
+  }
+
+  #frminputsiswa input[type=submit]:hover {
+    cursor: pointer;
+    background-color: #0095FF;
+  }
+
+
+  #frminputsiswa input[type=reset]:focus{
+    background-color: #0095FF;
+  }
+  #frminputsiswa input[type=reset]:hover {
+    cursor: pointer;
+    background-color: #0095FF;
+  }
+
+
   [type="radio"]:checked,
   [type="radio"]:not(:checked) {
       position: absolute;
@@ -191,18 +311,6 @@ font-family: 'Ubuntu';
     opacity: 0.5;
 }
 
-#frminputsiswa input[type=submit],input[type=reset] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 2px solid #FFF;
-    background-color: Transparent;
-    color: #FFF;
-    /*border-radius: 4px;*/
-    font-size: 16px;
-    box-sizing: border-box;
-}
 
 #c-login input[type=submit] {
     width: 93%;
@@ -236,17 +344,7 @@ font-family: 'Ubuntu';
 #nismsgerror ul{padding-right: 10px;}
 #nismsgerror li{float: right;padding: 2px;}
 
-#frminputsiswa input[type=submit]:focus{
-  background-color: #0095FF;
-}
 
-#frminputsiswa input[type=reset]:focus{
-  background-color: #0095FF;
-}
-#frminputsiswa input[type=reset]:hover {
-  cursor: pointer;
-  background-color: #0095FF;
-}
 #c-login input[type=submit]:hover {
   cursor: pointer;
   background-color: #0095FF;
@@ -256,6 +354,7 @@ font-family: 'Ubuntu';
   background-color: #0095FF;
 }
 
+.dcarinis{padding: 4px;}
 
 /* Style the table */
 #tb_siswa{ border-collapse: collapse; width:100%;font-size: 0.8em;}

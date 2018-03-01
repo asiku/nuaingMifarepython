@@ -223,8 +223,14 @@ def delsiswa(rw):
         _SQL = """SELECT * FRom tb_biodata_siswa"""
         cursor.execute(_SQL)
         contents = cursor.fetchall()
+        _SQL = """SELECT * FRom tb_kelas"""
+        cursor.execute(_SQL)
+        contentskelas = cursor.fetchall()
+        _SQL = """SELECT * FRom tb_status"""
+        cursor.execute(_SQL)
+        contentsstatus = cursor.fetchall()
     return render_template('inputdatasiswa.html', the_title="Input Data Siswa!",
-                           rows=contents,tb=2)
+                           rows=contents,rowskelas=contentskelas,rowsstatus=contentsstatus,tb=2)
 
 @app.route('/loginusr',methods=['POST'])
 def cek_login():
