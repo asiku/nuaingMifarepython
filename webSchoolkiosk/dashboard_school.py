@@ -192,7 +192,26 @@ def carialltbnis():
 
     return jsonify(tb_biodict)
 
+@app.route('/cari_nisedit/<cr>')
+@ceksess
+def carinisedit(cr):
+    with UseDatabase(dbconfig) as cursor:
+        # _SQL="""select * from  tb_biodata_siswa where nis like %s"""
+        # cursor.execute(_SQL,("%" + cr + "%",))
 
+        _SQL = """select * from  tb_biodata_siswa where nis=%s"""
+        cursor.execute(_SQL, (cr,))
+        contents = cursor.fetchall()
+        print(contents)
+        tb_biodict = []
+        for c in contents:
+            bio = {'nis': c[0], 'nama': c[1], 'jk': c[2], 'tlahir': c[3], 'alamat': c[4]
+                , 'nohpsis': c[5], 'noportu': c[6], 'kelas': c[7], 'tmasuk': c[8]
+               , 'tgllahir': c[9], 'nisn': c[10],
+                   'stat': c[11], 'img': c[12]}
+            tb_biodict.append(bio)
+
+    return jsonify(tb_biodict)
 
 @app.route('/cari_nis/<cr>')
 @ceksess
@@ -209,6 +228,7 @@ def carinis(cr):
            return jsonify({'result':'Mohon maaf Nis tersebut sudah Ada!'})
         else:
            return jsonify({'result':'ok'})
+
 
 @app.route('/delsis/<rw>')
 @ceksess

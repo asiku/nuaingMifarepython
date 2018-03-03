@@ -134,7 +134,7 @@
       {% for row in rows %}
 
 
-  <div class="dimgedit"><img class="imgaksi" src='{{ url_for('static', filename='pencil.png')}}' alt="error" onclick="tutupmsgnis()"></div>
+  <div class="dimgedit"><img class="imgaksi" src='{{ url_for('static', filename='pencil.png')}}' alt="error" onclick="overlay({{ row[0]}})"></div>
   <div class="dimghps"><a href="/delsis/{{ row[0]}}"> <img class="imgaksi" src='{{ url_for('static', filename='error.png')}}' alt="error" ></a></div>
 
 
@@ -142,7 +142,7 @@
 
           <td>{{ row[0]}}</td>
           <td>{{ row[1] }}</td>
-          <td><img class="imgaksi" src='{{ url_for('static', filename='pencil.png')}}' alt="error" onclick="overlay()"></td>
+          <td><img class="imgaksi" src='{{ url_for('static', filename='pencil.png')}}' alt="error" onclick="overlay({{ row[0]}})"></td>
           <!--<td><img class="imgaksi" src='{{ url_for('static', filename='error.png')}}' alt="error" onclick=delsis({{ row[0]}})></td>-->
           <td><a href="/delsis/{{ row[0]}}"> <img class="imgaksi" src='{{ url_for('static', filename='error.png')}}' alt="error" ></a></td>
 
@@ -167,9 +167,11 @@
 </div>
 
 <script type="text/javascript">
-function overlay() {
-	el = document.getElementById("dedit");
-	el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+function overlay(ns) {
+	// el = document.getElementById("dedit");
+	// el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+  $("#dedit").show("slow");
+  cariedit(ns);
 }
 
 function isEmpty(obj) {
@@ -214,6 +216,7 @@ var hp=document.getElementsByClassName("dimghps");
         // console.log("Nis: "+value.nis);
         cell1.innerHTML =value.nis;
         cell2.innerHTML = value.nama;
+        $('.dimgedit imgs').attr('onclick', cariedit(value.nis));
         $('.dimghps a').attr('href', "/delsis/" + value.nis);
         cell3.innerHTML=ed[i].innerHTML;
         cell4.innerHTML=hp[i].innerHTML;
@@ -258,7 +261,28 @@ var hp=document.getElementsByClassName("dimghps");
   });
 }
 
+function cariedit(ns){
+  $.ajax({
 
+    url: $SCRIPT_ROOT + "/cari_nisedit/" + ns,
+    success: function( response ) {
+
+      // console.log('edit: '+response);
+      // $("#nisedit").val(response.nis);
+      $.each(response, function(index, value) {
+
+            $("#nisedit").val(value.nis);
+            $("#namaedit").val(value.nama);
+            $("#jenis_kelaminedit").val(value.jk);
+              $("#alamatedit").val(value.alamat);
+                $("#tgl_lahiredit").val(value.tgllahir);
+console.log(value.tgllahir);
+          });
+
+
+    }
+  });
+}
 
 function cari(ns){
   $.ajax({
@@ -451,7 +475,7 @@ $('#tahun_masuk').append('<option value='+ thn1 +"selected=selected>"+thn1+'</op
 }
 
 $(document).ready(function () {
-
+$("#dedit").hide();
 $(".dimgedit").hide();
 $(".dimghps").hide();
 $("#nismsgerror").hide("slow");
@@ -506,7 +530,7 @@ $('#jenis_kelamin').keyup(function(e) {
 });
 
 $("#tgl_lahir").inputmask();
-
+$("#tgl_lahiredit").inputmask();
 $('#alamat').keyup(function(e) {
 
   if (e.keyCode == 13)
@@ -521,12 +545,12 @@ $('#alamat').keyup(function(e) {
 
    document.getElementById('filesToUpload').addEventListener('change', fileSelect, false);
    setTahunmasuk();
-  //  $('#tahun_masuk')
-  //              .attr('type', 'text')
-  //              .datepicker({
-  //                  // Consistent format with the HTML5 picker
-  //                  dateFormat: 'yy'
-  //              })
+
+$("#editbatal").click(function() {
+$("#dedit").hide("slow");
+});
+
+
   });
 
 </script>
