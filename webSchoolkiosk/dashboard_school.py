@@ -7,7 +7,7 @@ import os
 from tulis_tag import tulis_kartu
 from tulisk import tuliskartu
 # import base64
-
+# import datetime
 from werkzeug.utils import secure_filename
 
 app=Flask(__name__)
@@ -205,9 +205,12 @@ def carinisedit(cr):
         print(contents)
         tb_biodict = []
         for c in contents:
+            tgl=c[9]
+                # date,datetime.strftime('%Y-%m-%d')
+
             bio = {'nis': c[0], 'nama': c[1], 'jk': c[2], 'tlahir': c[3], 'alamat': c[4]
                 , 'nohpsis': c[5], 'noportu': c[6], 'kelas': c[7], 'tmasuk': c[8]
-               , 'tgllahir': c[9], 'nisn': c[10],
+               , 'tgllahir': tgl.strftime('%d-%m-%Y'), 'nisn': c[10],
                    'stat': c[11], 'img': c[12]}
             tb_biodict.append(bio)
 

@@ -134,7 +134,7 @@
       {% for row in rows %}
 
 
-  <div class="dimgedit"><img class="imgaksi" src='{{ url_for('static', filename='pencil.png')}}' alt="error" onclick="overlay({{ row[0]}})"></div>
+  <div class="dimgedit"><span class="s-aksi"><img class="imgaksi" src='{{ url_for('static', filename='pencil.png')}}' alt="error" onclick="overlay({{ row[0]}})"></span></div>
   <div class="dimghps"><a href="/delsis/{{ row[0]}}"> <img class="imgaksi" src='{{ url_for('static', filename='error.png')}}' alt="error" ></a></div>
 
 
@@ -142,7 +142,7 @@
 
           <td>{{ row[0]}}</td>
           <td>{{ row[1] }}</td>
-          <td><img class="imgaksi" src='{{ url_for('static', filename='pencil.png')}}' alt="error" onclick="overlay({{ row[0]}})"></td>
+          <td><span class="s-aksi"><img class="imgaksi" src='{{ url_for('static', filename='pencil.png')}}' alt="error" onclick="overlay({{ row[0]}})"></span></td>
           <!--<td><img class="imgaksi" src='{{ url_for('static', filename='error.png')}}' alt="error" onclick=delsis({{ row[0]}})></td>-->
           <td><a href="/delsis/{{ row[0]}}"> <img class="imgaksi" src='{{ url_for('static', filename='error.png')}}' alt="error" ></a></td>
 
@@ -274,9 +274,16 @@ function cariedit(ns){
             $("#nisedit").val(value.nis);
             $("#namaedit").val(value.nama);
             $("#jenis_kelaminedit").val(value.jk);
-              $("#alamatedit").val(value.alamat);
-                $("#tgl_lahiredit").val(value.tgllahir);
-console.log(value.tgllahir);
+            $("#alamatedit").val(value.alamat);
+            $("#tgl_lahiredit").val(value.tgllahir);
+            $("#tempatedit").val(value.tlahir);
+            $("#nohportuedit").val(value.noportu);
+            $("#nohpsiswaedit").val(value.nohpsis);
+            $("#kelasedit").val(value.kelas);
+            $("#tahun_masukedit").val(value.tmasuk);
+            $("#nisnedit").val(value.nisn);
+            $("#statusedit").val(value.stat);
+
           });
 
 
@@ -465,16 +472,19 @@ function cvt(element) {
 
 function setTahunmasuk(){
   var thn1=(new Date()).getFullYear();
-$('#tahun_masuk').append('<option value='+ thn1 +"selected=selected>"+thn1+'</option>');
+$('#tahun_masuk').append('<option value='+ thn1 +">"+thn1+'</option>');
+$('#tahun_masukedit').append('<option value='+ thn1 +">"+thn1+'</option>');
   var thn=(new Date()).getFullYear();
   for(var i=0;i<5;i++){
     thn=thn-1;
   $('#tahun_masuk').append('<option value='+ thn +">"+thn+'</option>');
+  $('#tahun_masukedit').append('<option value='+ thn +">"+thn+'</option>');
   }
 
 }
 
 $(document).ready(function () {
+setTahunmasuk();
 $("#dedit").hide();
 $(".dimgedit").hide();
 $(".dimghps").hide();
@@ -544,7 +554,7 @@ $('#alamat').keyup(function(e) {
    tabnsiswa('frminputsiswa',{{tb}});
 
    document.getElementById('filesToUpload').addEventListener('change', fileSelect, false);
-   setTahunmasuk();
+
 
 $("#editbatal").click(function() {
 $("#dedit").hide("slow");
