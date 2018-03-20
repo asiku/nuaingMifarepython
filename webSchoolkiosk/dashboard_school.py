@@ -7,7 +7,7 @@ import os
 from tulis_tag import tulis_kartu
 from tulisk import tuliskartu
 # import base64
-# import datetime
+from datetime import datetime
 from werkzeug.utils import secure_filename
 
 app=Flask(__name__)
@@ -29,6 +29,7 @@ def allowed_file(filename):
 
 
 @app.route('/upload_file', methods=['GET','POST'])
+@ceksess
 def upload_file():
 
     if request.method == 'POST':
@@ -47,6 +48,7 @@ def upload_file():
             # savedatasiswa(pth+'/'+os.path.join(app.config['UPLOAD_FOLDER']) + '/' + file.filename)
             bs64=request.form['imgpth']
 
+            print("tgllahir:"+request.form['tgl_lahir'])
             savedatasiswa(bs64)
 
             if request.form['radio-group1']=="ya":
@@ -101,6 +103,8 @@ def savedatasiswa(fname):
                ,tbl.gbr
                )
             # isi=("909","adem","L")
+            # tglh = datetime.strptime(request.form['tgl_lahir'], '%Y-%m-%d')
+            tglh=datetime.strptime(request.form['tgl_lahir'], '%d/%m/%Y')
             isi = (
                 str(request.form['nis']),
                 str(request.form['nama']),
@@ -111,7 +115,8 @@ def savedatasiswa(fname):
                 str(request.form['nohportu']),
                 str(request.form['kelas']),
                 str(request.form['tahun_masuk']),
-                str(request.form['tgl_lahir']),
+                # str('1990/01/02'),
+                str(tglh),
                 str(request.form['nisn']),
                 str(request.form['status'])
                 , str(fname)
@@ -122,6 +127,70 @@ def savedatasiswa(fname):
         #     pass
 
     # return "oke"
+
+
+@app.route('/upload_fileedit', methods=['GET','POST'])
+@ceksess
+def upload_fileedit():
+
+    if request.method == 'POST':
+        # check if the post request has the file part
+
+        if 'file' not in request.files:
+            flash('Anda belum Mengupload Foto Jika Lupa bisa di Edit di Tab Update','foto')
+            return redirect(request.url)
+        file = request.files['file']
+        if request.form['nis'] != None:
+
+            # if file.filename == '':
+            #    img=base64.b64encode(file.read())
+
+            # pth=os.path.dirname(os.path.realpath(__file__))
+            # savedatasiswa(pth+'/'+os.path.join(app.config['UPLOAD_FOLDER']) + '/' + file.filename)
+            bs64=request.form['imgpth']
+
+            editbio(bs64)
+
+            if request.form['radio-group1']=="ya":
+
+               if tulis_kartu()=="Tap":
+                  print("kartu tap")
+                  tuliskartu(request.form['nis'])
+               else:
+                  print("kartu untap")
+                  flash("Kartu Belum di Tap",'kartu')
+
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            flash('Anda belum Mengupload Foto Jika Lupa bisa di Edit di Tab Update','foto')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect('/inputsiswa')
+
+
+    return redirect('/inputsiswa')
+
+def editbio(img):
+
+    with UseDatabase(dbconfig) as cursor:
+
+            _SQL="UPDATE "+tbl.table+" SET "+ tbl.nama+"=%s,"+ tbl.jk+"=%s," \
+                 + tbl.tempat+"=%s,"+ tbl.ala+"=%s,"+ tbl.nohpsiswa+"=%s,"\
+                 + tbl.nohportu+"=%s,"+ tbl.idkelas+"=%s,"+ tbl.thnmasuk+"=%s,"\
+                 + tbl.tgllahir+"=%s,"+ tbl.nisn+"=%s,"\
+                 + tbl.stat+"=%s,"+ tbl.gbr+"=%s" + " WHERE  "+tbl.nis+"=%s"
+
+            cursor.execute(_SQL, (request.form['nama'],request.form['jenis_kelamin'],
+                                  request.form['tempat'],request.form['alamat']
+                                  , request.form['nohpsiswa']
+                                  , request.form['nohportu'],request.form['kelas']
+                                  , request.form['tahun_masuk'],request.form['tgl_lahir']
+                                  , request.form['nisn'], request.form['status']
+                                  , request.form['nis'],img,))
+    return redirect('/inputsiswa')
 
 @app.route('/inputsiswa')
 @ceksess
@@ -231,6 +300,7 @@ def carinis(cr):
            return jsonify({'result':'Mohon maaf Nis tersebut sudah Ada!'})
         else:
            return jsonify({'result':'ok'})
+
 
 
 @app.route('/delsis/<rw>')
